@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<HTML>
+    <HEAD>
+        <TITLE>1 Minute DIY AI!</TITLE>
+        <SCRIPT SRC="https://unpkg.com/brain.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SCRIPT>
+            const net = new brain.NeuralNetwork();
+
+            net.train([
+                {
+                    input: [0.972, 0.987], output: [0.973]
+                },
+                {
+                    input: [0.952, 0.967], output: [0.953]
+                },
+                {
+                    input: [0.852, 0.826], output: [0.853]
+                },
+                {
+                    input: [0.702, 0.719], output: [0.717]
+                },
+                {
+                    input: [0.682, 0.683], output: [0.670]
+                },
+                {
+                    input: [0.512, 0.523], output: [0.511]
+                },
+                {
+                    input: [0.839, 0.895], output: [0.823]
+                }
+            ], {
+                errorThresh: 0.001
+            });
+
+            function predict(value) {
+                let output = net.run(value.split(" "));
+                document.getElementById("output").innerText = "Predicted: " + Math.round(output*100*10)/10;
+            }
+        </SCRIPT>
+        <H1>1 Minute DIY AI! | Exam Grade Predictor</H1>
+        <INPUT TYPE="text" ID="s1" PLACEHOLDER="Semester 1 grade ex. 96.9" STYLE="width: 280px; margin: 5px;"><BR>
+        <INPUT TYPE="text" ID="s2" PLACEHOLDER="Semester 2 grade ex. 90.4" STYLE="width: 280px; margin: 5px;"><BR>
+        <BUTTON ONCLICK="predict(parseInt(document.getElementById('s1').value)*0.01 + ' ' + parseInt(document.getElementById('s2').value)*0.01)" STYLE="margin: 5px;">Submit</BUTTON><BR>
+        <DIV ID="output" STYLE="margin: 5px">Predicted: ---</DIV>
+    </BODY>
+</HTML>
