@@ -2,13 +2,14 @@
 <HTML>
     <HEAD>
         <TITLE>1 Minute DIY AI!</TITLE>
-        <SCRIPT SRC="https://unpkg.com/brain.js"></SCRIPT>
+        <SCRIPT SRC="https://unpkg.com/brain.js"></SCRIPT> <!-- import brain.js code -->
     </HEAD>
     <BODY>
         <SCRIPT>
             const net = new brain.NeuralNetwork();
 
-            net.train([
+            net.train([ //this is the data set that we're using; exam grades are a decimal from 1-0 ex. a 92.7% would be a 0.927
+                //however, this data can be modified and can represent whatever you want it to be
                 {
                     input: [0.972, 0.987], output: [0.973]
                 },
@@ -31,18 +32,18 @@
                     input: [0.839, 0.895], output: [0.823]
                 }
             ], {
-                errorThresh: 0.001
+                errorThresh: 0.001 //bot must be within 0.001 of the number to stop training
             });
 
-            function predict(value) {
-                let output = net.run(value.split(" "));
-                document.getElementById("output").innerText = "Predicted: " + Math.round(output*100*10)/10;
+            function predict(value) { //string is inputed into here after you submit it
+                let output = net.run(value.split(" ")); //the string is converted into a 2 number array ex. [0.690, 0.420] if you submit "0.690" for your semester 1 grade and "0.420" for your semester 2 grade (I hope that's not the case though lol)
+                document.getElementById("output").innerText = "Predicted: " + Math.round(output*100*10)/10; //output the number (the *10 and /10 after the round rounds to the nearest tenth
             }
         </SCRIPT>
-        <H1>1 Minute DIY AI! | Exam Grade Predictor</H1>
+        <H1>1 Minute DIY AI! | Exam Grade Predictor</H1> <!--this stuff is here just for the user input-->
         <INPUT TYPE="text" ID="s1" PLACEHOLDER="Semester 1 grade ex. 96.9" STYLE="width: 280px; margin: 5px;"><BR>
         <INPUT TYPE="text" ID="s2" PLACEHOLDER="Semester 2 grade ex. 90.4" STYLE="width: 280px; margin: 5px;"><BR>
-        <BUTTON ONCLICK="predict(parseInt(document.getElementById('s1').value)*0.01 + ' ' + parseInt(document.getElementById('s2').value)*0.01)" STYLE="margin: 5px;">Submit</BUTTON><BR>
+        <BUTTON ONCLICK="predict(parseInt(document.getElementById('s1').value)*0.01 + ' ' + parseInt(document.getElementById('s2').value)*0.01)" STYLE="margin: 5px;">Submit</BUTTON><BR> <!-- input should be multiplied by 0.01 to convert from percentage to decimal, and the numbers should be combined to form a single string
         <DIV ID="output" STYLE="margin: 5px">Predicted: ---</DIV>
     </BODY>
 </HTML>
